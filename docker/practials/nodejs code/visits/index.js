@@ -1,8 +1,11 @@
 const express =  require('express'); // including package
-const redis = requrie('redis');
+const redis = require('redis');
 
 const app = express();   // creatting express app
-const client =  redis.createClient(); // create client of redis server
+const client =  redis.createClient({
+    host: 'redis-server', 
+    port: 6379
+}); // create client of redis server
 client.set('visits',0);    // setting inital visit value in redis server
 
 
@@ -18,6 +21,5 @@ client.get('visits', (err,visits) => { // client (redis to get no of visits)
 app.listen(8081, () => {   // we are creating listerning port for out app
 
     console.log('Listering to port 8081');
-
 
 });
