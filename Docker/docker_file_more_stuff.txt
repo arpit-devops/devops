@@ -1,0 +1,39 @@
+1. FROM scratch     ===> Docker to build the image starting from the scratch image.
+
+2. ADD busybox.tar.gz /    ===> adds a pre-built root filesystem (rootfs) on top of the scratch image. 
+
+Important:-
+Note that the ADD busybox.tar.xz / command will extract the tar file to the destination / folder. 
+(This is one of the differences between the ADD and COPY commands in Dockerfile instructions.) 
+
+
+3. CMD ["sh"]      ====>  sets up the default entry point and starts a shell for a container running the busybox image.
+
+what do we meant by scratch image?
+==> The scratch image is the smallest possible image for docker. 
+Actually, by itself it is empty (in that it doesn't contain any folders or files) and is the starting point for building out images. 
+In order to run binary files on a scratch image, your executables need to be statically compiled and self-contained.
+
+The FROM scratch command signals to the build process that we want the next command in the Dockerfile to be the first filesystem layer in our image.
+
+
+
+
+Take example of simple hello-world scratch image Dockerfile:-
+
+FROM scratch
+COPY hello /
+CMD ["/hello"]
+
+here we can see that it copy a hello file (executable file) that print hello-world to / (root)
+now we can run command hello executale file.
+
+Since the scratch image doesn’t contain anything, the hello program needs to be a Linux binary that is "statically compiled" 
+so that it can be executed in a minimalistic Docker container. 
+To create statically compiled binaries, we can build them from code in "Go or C/C++".
+
+ENTRYPOINT:-ENTRYPOINT is the other instruction used to configure how the container will run. 
+Just like with CMD, you need to specify a command and parameters. 
+What is the difference between CMD and ENTRYPOINT? 
+You cannot override the ENTRYPOINT instruction by adding command-line parameters to the docker run command.
+

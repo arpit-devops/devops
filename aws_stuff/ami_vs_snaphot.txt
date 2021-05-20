@@ -1,0 +1,8 @@
+https://www.youtube.com/watch?v=LiJHT2Nl1Pk
+
+this both snapshot and AMI is related to EC2
+
+snapshot is used to take backup, like:-
+1. Backup of volume in EC2
+2. backup of RDS and other services.
+
