@@ -1,0 +1,11 @@
+--- # web group
+
+- hosts: web
+  user: myubuntu
+  become: yes
+  connection: ssh
+  gather_facts: yes
+
+
+
+
