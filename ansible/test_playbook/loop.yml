@@ -1,0 +1,17 @@
+---
+- hosts: web
+  user: myubuntu
+  become: yes
+  connection: ssh
+
+  tasks:
+          - name: adding many user
+            user: name='{{item}}' state=present
+            with_items:
+                    - arpit
+                    - rachit
+                    - rohit
+
+
+
+
