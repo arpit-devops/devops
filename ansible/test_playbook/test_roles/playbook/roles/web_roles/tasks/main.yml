@@ -1,0 +1,10 @@
+---
+
+- name: install nginx using roles
+  apt: name=nginx state=present
+
+- name: enable nginx using roles
+  service:
+          name=nginx
+          state=started
+

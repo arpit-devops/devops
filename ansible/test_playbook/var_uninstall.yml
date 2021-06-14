@@ -1,0 +1,20 @@
+---
+
+- hosts: web
+  user: myubuntu
+  become: yes
+  connection: ssh
+
+  vars:
+          pkgname: nginx
+
+  tasks:
+          - name: stop service
+            service:
+                    name: nginx
+                    state: stopped
+
+          - name: install nginx
+            apt: name='{{pkgname}}' state=absent
+
+

@@ -1,0 +1,12 @@
+---
+- hosts: web
+  become: yes
+  user: myubuntu
+  connection: ssh
+  roles:
+          - web_roles
+
+
+
+
+

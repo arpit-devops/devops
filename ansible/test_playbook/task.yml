@@ -1,0 +1,30 @@
+---
+
+- hosts: web
+  become: yes
+  user: myubuntu
+  connection: ssh
+  gather_facts: yes
+
+  tasks:
+          - name: service nginx stop
+            service:
+                    name: nginx
+                    state: stopped
+          
+          - name: install nginx
+            apt: name=nginx state=absent 
+            
+
+
+
+
+                                                                                                                                                       
+
+
+
+
+
+
+
+
