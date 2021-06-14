@@ -1,0 +1,20 @@
+---
+
+- hosts: web
+  user: myubuntu
+  become: yes
+  connection: ssh
+
+  vars:
+          pkgname: nginx
+
+  tasks:
+          - name: install nginx
+            apt: name='{{pkgname}}' state=present
+          - name: start service
+            service:
+                    name: nginx
+                    state: started 
+
+
+
