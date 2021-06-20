@@ -1,0 +1,155 @@
+
+
+
+
+
+
+
+1.acos-server  =>
+
+and edit config.yml file , give ip for vthunder
+git clone https://github.com/a10networks/PrometheusExporter.git
+
+install pip  =>  sudo apt update    =>    sudo apt install python3-pip
+
+go inside that folder and type 
+
+pip3 install -r requirements.txt
+edit config.yml file
+python3 acos_exporter.py  => this will run acos exporter
+
+or also try with python acos_exporter.py
+
+
+
+
+132.145.193.228
+150.136.83.64
+
+
+
+
+2.prometheus-server =>
+
+first download promethus for there website 
+
+we have prometheus.yml file use that
+
+edit configuration file.yml
+./prometheus
+
+
+
+
+
+3. grafana-server  => service grafana status     service grafana-server start
+
+sudo apt-get install -y adduser libfontconfig1
+wget https://dl.grafana.com/oss/release/grafana_7.1.3_amd64.deb
+sudo dpkg -i grafana_7.1.3_amd64.deb
+
+
+service grafana-server start or status
+
+on port 3000
+
+for grafana you need to install pdf creater use 
+sudo apt-get install texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
+
+
+
+
+4.grafana-reporter => ~/go/bin  grafana-reporter
+
+install golang and 
+
+in .bashrc file 
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go
+
+open ~/go/bin
+and do 
+go get github.com/IzakMarais/reporter/...
+go install -v github.com/IzakMarais/reporter/cmd/grafana-reporter
+./grafana-reporter
+
+now grafana reporter is running on port 8686
+
+
+now go to grafana => in your browser => localhost:3000 
+
+, create "data source"
+add prometheus then 
+ask for queries 
+put them in graph 
+save it , after save you will get uid for dash board
+then open setting -> link
+Type  => link
+Url  => http://localhost:8686/api/v5/report/{dashboardUID}?apitoken=12345&var-host=devbox
+you need to mention for uid and token key (generate with grafana)
+Title=> report
+Tooltip => your wish
+Icon=> doc
+
+Include 
+Time range => ON
+Variable values=> ON
+Open in new tab => OFF
+
+save it , got to your dashboard click on report to install pdf
+
+for cli :-
+grafana-reporter -cmd_enable=1 -cmd_apiKey [api-key] -ip localhost:3000 -cmd_dashboard ITeTdN2mk -cmd_ts from=now-1y -cmd_o out.pdf
+
+but here also you need to mension api-key and dashboard uid.
+
+
+
+
+
+
+
+default port no
+1. acos-server            : localhost:9734
+2. promotheus server           localhost:9090
+3. grafana-server  <do service grafana restart>  localhost:3000
+4. grafana-reporter    localhost:8686
+
+1
+
+
+
+
+http://localhost:8686/api/v5/report/{dashboardUID}?apitoken=eyJrIjoiNlZiQXFkd3FDTXl0UkRmNjZWamFnQXJVc3dvSERjNVMiLCJuIjoid2hpdGUiLCJpZCI6MX0=&var-host=devbox
+
+
+http://localhost:8686/api/v5/report/vtGL0WIGk?apitoken=eyJrIjoiNlZiQXFkd3FDTXl0UkRmNjZWamFnQXJVc3dvSERjNVMiLCJuIjoid2hpdGUiLCJpZCI6MX0=&var-host=devbox
+
+
+
+http://localhost:8686/api/v5/report/lWuIQWIMz?apitoken=eyJrIjoiNlZiQXFkd3FDTXl0UkRmNjZWamFnQXJVc3dvSERjNVMiLCJuIjoid2hpdGUiLCJpZCI6MX0=&var-host=devbox
+
+
+7wP5rZIGz
+
+
+http://localhost:8686/api/v5/report/jrOl9WIMz?apitoken=eyJrIjoiNlZiQXFkd3FDTXl0UkRmNjZWamFnQXJVc3dvSERjNVMiLCJuIjoid2hpdGUiLCJpZCI6MX0=&var-host=devbox
+
+
+1.here is way for doing pdf.z
+
+https://github.com/IzakMarais/reporter
+
+
+
+
+
+
+https://github.com/IzakMarais/reporter
+​    
+https://github.com/a10networks/PrometheusExporter
+
+
+
+
+Fontconfig is a font configuration and customization library, which does not depend on the X Window System. It is designed to locate fonts within the system and select them according to requirements specified by applications.
