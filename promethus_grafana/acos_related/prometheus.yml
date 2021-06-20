@@ -1,0 +1,82 @@
+# my global config
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  # - job_name: 'prometheus_job_6'
+  #   static_configs:
+  #   - targets: ['localhost:9734']
+  #   metrics_path: '/metrics'    
+  #   params:
+  #     host_ip: ["13.82.138.20"]
+  #     api_endpoint: ["/slb/dns", "/slb/virtual-server/10.10.10.23/port/80+tcp", "/slb/fix"]
+  #     api_name: ["_slb_dns", "_slb_virtual_server_10.10.10.23_port_80_tcp", "_slb_fix"]
+
+  # - job_name: 'prometheus_job_7'
+  #   static_configs:
+  #   - targets: ['localhost:9734']
+  #   metrics_path: '/metrics'    
+  #   params:
+  #     host_ip: ["10.43.12.122"]
+  #     api_endpoint: ["/slb/virtual-server/demo_test_p1/port/80+tcp"]
+  #     api_name: ["_slb_virtual_server_demo_test_p1_port_80_tcp"]
+  #     partition: ["p1New"]
+
+  # - job_name: 'prometheus_job_8'
+  #   static_configs:
+  #   - targets: ['localhost:9734']
+  #   metrics_path: '/metrics'
+  #   params:
+  #     host_ip: ["10.43.12.122"]
+  #     api_endpoint: ["/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix", "/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix"]
+  #     api_name: ["_slb_virtual_server_lb1_port_81_tcp", "_slb_dns", "_slb_fix", "_slb_virtual_server_lb1_port_81_tcp1", "_slb_dns1", "_slb_fix1", "_slb_virtual_server_lb1_port_81_tcp2", "_slb_dns2", "_slb_fix2", "_slb_virtual_server_lb1_port_81_tcp3", "_slb_dns3", "_slb_fix3", "_slb_virtual_server_lb1_port_81_tcp4", "_slb_dns4", "_slb_fix4", "_slb_virtual_server_lb1_port_81_tcp5", "_slb_dns5", "_slb_fix5", "_slb_virtual_server_lb1_port_81_tcp6", "_slb_dns6", "_slb_fix6", "_slb_virtual_server_lb1_port_81_tcp7", "_slb_dns7", "_slb_fix7", "_slb_virtual_server_lb1_port_81_tcp8", "_slb_dns8", "_slb_fix8", "_slb_virtual_server_lb1_port_81_tcp9", "_slb_dns9", "_slb_fix9", "_slb_virtual_server_lb1_port_81_tcp10", "_slb_dns10", "_slb_fix10", "_slb_virtual_server_lb1_port_81_tcp11", "_slb_dns11", "_slb_fix11", "_slb_virtual_server_lb1_port_81_tcp12", "_slb_dns12", "_slb_fix12", "_slb_virtual_server_lb1_port_81_tcp13", "_slb_dns13", "_slb_fix13", "_slb_virtual_server_lb1_port_81_tcp14", "_slb_dns14", "_slb_fix14", "_slb_virtual_server_lb1_port_81_tcp15", "_slb_dns15", "_slb_fix15", "_slb_virtual_server_lb1_port_81_tcp16", "_slb_dns16", "_slb_fix16", "_slb_virtual_server_lb1_port_81_tcp17", "_slb_dns17", "_slb_fix17", "_slb_virtual_server_lb1_port_81_tcp18", "_slb_dns18", "_slb_fix18", "_slb_virtual_server_lb1_port_81_tcp19", "_slb_dns18", "_slb_fix18", "_slb_virtual_server_lb1_port_81_tcp19", "_slb_dns19", "_slb_fix19", "_slb_virtual_server_lb1_port_81_tcp20", "_slb_dns20", "_slb_fix20", "_slb_virtual_server_lb1_port_81_tcp21", "_slb_dns21", "_slb_fix21", "_slb_virtual_server_lb1_port_81_tcp22", "_slb_dns22", "_slb_fix22", "_slb_virtual_server_lb1_port_81_tcp23", "_slb_dns23", "_slb_fix23", "_slb_virtual_server_lb1_port_81_tcp24", "_slb_dns24", "_slb_fix24", "_slb_virtual_server_lb1_port_81_tcp25", "_slb_dns25", "_slb_fix25", "_slb_virtual_server_lb1_port_81_tcp26", "_slb_dns26", "_slb_fix26", "_slb_virtual_server_lb1_port_81_tcp27", "_slb_dns27", "_slb_fix27", "_slb_virtual_server_lb1_port_81_tcp28", "_slb_dns28", "_slb_fix28", "_slb_virtual_server_lb1_port_81_tcp29", "_slb_dns29", "_slb_fix29", "_slb_virtual_server_lb1_port_81_tcp30", "_slb_dns30", "_slb_fix30"]
+
+  - job_name: 'prometheus_job_8'
+    static_configs:
+    - targets: ['localhost:9734']
+    metrics_path: '/metrics'
+    params:
+      host_ip: ["150.136.83.64"]
+      api_endpoint: ["/slb/dns/stats"]
+
+  # - job_name: 'prometheus_job_9'
+  #   kubernetes_sd_configs:
+  #   - role: service
+  #   relabel_configs:
+  #   - source_labels: [__meta_kubernetes_service_name]
+  #     regex: prometheus-exporter-svc
+  #     target_label: service
+  #   metrics_path: '/metrics'
+  #   params:
+  #     host_ip: ["10.43.12.122"]
+  #     api_endpoint: ["/slb/virtual-server/lb1/port/81+tcp", "/slb/dns", "/slb/fix"]
+  #     api_name: ["_slb_virtual_server_lb1_port_81_tcp", "_slb_dns", "_slb_fix"]
+
+
+    # - source_labels: [__meta_kubernetes_service_label_app]
+    #   regex: prometheus-exporter-server
+    #   target_label: service
+        
+      # selectors:
+      #   - role: service
+      #     label: prometheus-exporter-server
+
+
+      # prometheus-exporter-svc.default.svc

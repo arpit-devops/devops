@@ -1,0 +1,6 @@
+rate(http_requests_total[$__interval])
+
+Prometheus, all metrics are time-series data. 
+The Prometheus client libraries are the ones in charge of aggregating metrics data, like count or sum.
+Usually, these client libraries—like the Go library from the graphic above—have four types of metrics: counter, gauge, history, and summary.
+
