@@ -1,0 +1,1 @@
+<html><head><b> arpit aws  </b></head><body>this is ec2 from ASG</body></html>
