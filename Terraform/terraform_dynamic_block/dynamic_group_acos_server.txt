@@ -1,0 +1,39 @@
+provider "thunder" { 
+    address = "10.16.36.250"
+    username = "admin"
+    password = "a10"
+}
+
+resource "thunder_server" "Server" {
+  for_each             = local.grouped
+  health_check_disable = 1
+  name                 = "Server_${each.key}"
+  host                 = each.key
+
+  dynamic "port_list" {
+    for_each = each.value
+
+    content {
+      health_check_disable = 1
+      port_number          = port_list.value.port
+      protocol             = "tcp"
+    }
+
+  }
+}
+
+
+locals {
+  servers = jsondecode("[{\"address\":\"10.10.10.1\",\"port\":\"8080\"},{\"address\":\"10.10.10.1\",\"port\":\"8081\"},{\"address\":\"10.10.10.2\",\"port\":\"8080\"},{\"address\":\"10.10.10.2\",\"port\":\"8081\"}]")
+
+  service_ids = transpose({
+    for id, s in local.servers : id => [s.address]
+  })
+  grouped = {
+    for name, ids in local.service_ids : name => [for id in ids : local.servers[id]]
+  }
+}
+
+output result {
+  value = local.grouped
+}
