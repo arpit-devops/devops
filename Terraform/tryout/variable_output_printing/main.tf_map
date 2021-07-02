@@ -1,0 +1,28 @@
+# variable value1 {
+#   type        = map
+#   default     = {
+
+#     "hii" = "hello"
+#     "1" = 1
+#     "tg" = "ds"
+#   }
+#   description = "description"
+# }
+
+
+variable images {          // "image" is use in older version of terraform 
+  type = map
+
+  default = {
+    us-east-1 = "image-1234"
+    us-west-2 = ["image-4567", "e"]
+  }
+}
+
+
+
+output value1print {
+  value       = var.images
+  #description = "description"
+  #depends_on  = []
+}

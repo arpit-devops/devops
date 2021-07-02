@@ -1,0 +1,19 @@
+# variable value1 {
+#   type        = list(string)
+#   default     = ["one", "two", "three"]
+#   description = "description"
+# }
+
+variable value1 {
+  type        = list
+  default     = [1, "two", false]
+  description = "description"
+}
+
+
+
+output value1print {
+  value       = var.value1
+  #description = "description"
+  #depends_on  = []
+}
