@@ -15,8 +15,8 @@ variable "private_subnet_cidr" {
 
 provider "aws" {
     region = "us-east-1"
-    secret_key = "sRaQTkRKI0GcxXPhuZR8yTdwsgre0npjW6SRVL5k"
-    access_key = "AKIASP6EMJ4BSB556G5X"
+    secret_key = "swsgre0npjW6SRVL5k"
+    access_key = "AG5X"
   
 }
 

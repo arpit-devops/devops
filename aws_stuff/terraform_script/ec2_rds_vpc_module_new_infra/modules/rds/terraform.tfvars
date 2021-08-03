@@ -1,4 +1,4 @@
-# RDS
+
 rds_identifier        = "mysql"
 rds_engine            = "mysql"
 rds_engine_version    = "8.0.15"
@@ -12,9 +12,9 @@ rds_port                    = 3306
 #rds_maintenance_window      = "Mon:00:00-Mon:03:00"
 #rds_backup_window           = "10:46-11:16"
 #rds_backup_retention_period = 1
-rds_publicly_accessible     = false
+publicly_accessible     = false
 
-sg_ingress_cidr_block = ""
+
 
 #rds_final_snapshot_identifier = "prod-trademerch-website-db-snapshot" # name of the final snapshot after deletion
 #rds_snapshot_identifier       = null # used to recover from a snapshot

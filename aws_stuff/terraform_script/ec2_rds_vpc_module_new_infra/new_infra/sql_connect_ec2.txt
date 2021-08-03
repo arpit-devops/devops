@@ -1,0 +1,6 @@
+yum install mysql
+
+  mysql -h  -P 3306 -u <username> -p   ====>   type thisit will ask for password
+
+
+  mysql -h  rdsdemo.ctwowzelsd<farzi-dns>fasktrl.us-east-1.rds.amazonaws.com -P 3306 -u admin -p   ====>   type thisit will ask for password
