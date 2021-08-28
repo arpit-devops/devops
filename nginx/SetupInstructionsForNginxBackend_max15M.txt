@@ -1,0 +1,261 @@
+1.We need to install gunicorn 
+------------------------------------------------------------
+$pip3 install gunicorn 
+[root@dell-640 dell-backend]# which gunicorn
+/usr/local/bin/gunicorn
+
+
+1.1 - getenforce command should return Permissive mode else set it to permissive with setenforce 0 as mentioned below
+-----------------------------------------------------------------
+
+#getenforce
+Permissive
+
+
+#If above command is not returning Permissive
+#setenforce 0
+
+2.create file /etc/systemd/system/dell-backend-auth-9118.service
+-------------------------------------------------------------------------
+write content as 
+
+
+[Unit]
+Description=wsgi instance to serve dell-backend-auth-9118
+After=network.target
+
+[Service]
+WorkingDirectory=/home/visibility/dell-backend-auth-9118
+ExecStart=/usr/local/bin/gunicorn --workers 3 --bind unix:dell-backend-auth-9118.sock -m 0111 wsgi_auth:application
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+3.you can see there is sock file created /home/visibility/dell-backend-auth-9118/dell-backend-auth-9118.sock, our enginx will query with this socket file.
+-------------------------------------------------------------------------------------------------------------------------------------------------
+now run this service like :- 
+
+$sudo systemctl enable dell-backend-auth-9118.service
+$sudo systemctl start dell-backend-auth-9118.service
+
+
+you can see sock file present in WorkingDirectory.
+
+
+
+
+4.create file /etc/systemd/system/dell-backend.service
+-------------------------------------------------------------------------
+write content as 
+
+
+[Unit]
+Description=wsgi instance to serve dell-backend
+After=network.target
+
+[Service]
+WorkingDirectory=/home/visibility/dell-backend
+ExecStart=/usr/local/bin/gunicorn --workers 3 --bind unix:dell-backend.sock -m 0111 wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+5.you can see there is sock file created /home/visibility/dell-backend/dell-backend.sock, our enginx will query with this socket file.
+-------------------------------------------------------------------------------------------------------------------------------------------------
+now run this service like :- 
+
+$sudo systemctl enable dell-backend.service
+$sudo systemctl start dell-backend.service
+
+
+you can see sock file present in WorkingDirectory.
+
+
+6. insatll nginx
+----------------------------------------------
+yum install nginx
+
+or we can install manually 
+
+wget https://nginx.org/packages/rhel/7/x86_64/RPMS/nginx-1.18.0-1.el7.ngx.x86_64.rpm
+yum install nginx-1.18.0-1.el7.ngx.x86_64.rpm
+
+
+some configuration here required as :-
+Go to /home/visibility/dell-ui
+and do
+
+#git pull
+#npm install
+#npm run build
+
+put certificate here:-
+
+/home/certs/activated/cert.pem;
+/home/certs/activated/key.pem;
+
+give required permission to cert:
+
+chmod 666 /home/certs/activated/cert.pem;
+chmod 666 /home/certs/activated/key.pem;
+
+
+
+
+
+7. configure nginx 
+------------------------------------------------
+7.1 create file /etc/nginx/conf.d/dell-backend.conf
+and write content as:-
+
+
+upstream uwsgi_backend {
+    server unix:/home/visibility/dell-backend/dell-backend.sock;
+}
+
+
+server {
+    listen 9119 ssl;
+    server_name localhost;
+    client_max_body_size 15M;
+    ssl_certificate     /home/certs/activated/cert.pem;
+    ssl_certificate_key /home/certs/activated/key.pem;
+    ssl_protocols TLSv1.2;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers AES256:AES128:AES128-GCM:AES256-GCM;
+#location / {
+location ^~ /api/v1/xhost {  
+        proxy_pass http://uwsgi_backend;
+        proxy_set_header X-Real-IP  $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_redirect http://uwsgi_backend/api/v1/xhost $scheme://$http_host/;
+        proxy_http_version 1.1;
+        proxy_read_timeout 20d;
+        proxy_buffering off;
+
+    }
+
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/html;
+    }
+}
+
+
+
+
+7.2 create file /etc/nginx/conf.d/dell-backend-auth-9118.conf
+and write content as:-
+
+
+upstream uwsgi_backend_auth {
+        server unix:/home/visibility/dell-backend-auth-9118/dell-backend-auth-9118.sock;
+        }
+
+
+server {
+    listen 9118 ssl;
+    server_name localhost;
+    client_max_body_size 15M;
+    ssl_certificate     /home/certs/activated/cert.pem;
+    ssl_certificate_key /home/certs/activated/key.pem;
+    ssl_protocols TLSv1.2;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers AES256:AES128:AES128-GCM:AES256-GCM;
+#location / {
+location ^~ /api/v2/xhost {  
+        proxy_pass http://uwsgi_backend_auth;
+        proxy_set_header X-Real-IP  $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_redirect http://uwsgi_backend_auth/api/v2/xhost $scheme://$http_host/;
+        proxy_http_version 1.1;
+        proxy_read_timeout 20d;
+        proxy_buffering off;
+
+    }
+
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/html;
+    }
+}
+
+
+
+
+
+7.3 Create /etc/nginx/conf.d/dell-ui.conf with following content:
+------------------------------------------------------------------
+
+ server {
+    listen 80 default_server;
+    server_name localhost;
+    client_max_body_size 15M;
+    return 301 https://$host$request_uri;
+  }
+
+
+server {
+    listen 443 ssl;
+    server_name localhost;
+    client_max_body_size 15M;
+    ssl_certificate     /home/certs/activated/cert.pem;
+    ssl_certificate_key /home/certs/activated/key.pem;
+    ssl_protocols TLSv1.2;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers AES256:AES128:AES128-GCM:AES256-GCM;
+    location / {
+        #root /home/visibility/dell-ui/build;  <<<<<<<<<<<<<<<< Make sure that this points to build directory of GUI code
+        index index.html index.htm;
+        try_files $uri /index.html;
+    }
+
+    location /api/v1/xhost {
+          add_header 'Access-Control-Allow-Origin' https://localhost:9119;
+          #include uwsgi_params;
+          #uwsgi_pass unix:/tmp/dell-backend.sock;
+          proxy_pass https://localhost:9119;
+    }
+
+    location /api/v2/xhost {
+          add_header 'Access-Control-Allow-Origin' https://localhost:9118;
+          proxy_pass https://localhost:9118;
+    }
+
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/html;
+    }
+}
+
+
+
+
+9. Restart nginx server
+--------------------------------
+
+systemctl restart nginx
+
+
+If got error like "SELinux restrictions" =>  to disable SELinux restrictions for the httpd_t =>  #semanage permissive -a httpd_t  
+
+
+
+
+
+
+
+
+
+
+
+
+
