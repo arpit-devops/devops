@@ -12,7 +12,7 @@ sudo usermod -aG docker ubuntu
 mkdir wordpress database nginx
 
 # download the nginx config file from git repo
-url=https://raw.githubusercontent.com/hiashutosh/Docker/master/nginx/nginx.conf 
+url=https://raw.githubusercontent.com/arpit-embedded/devops/main/docker/LAMP_stack/nginx.conf
 cd nginx/
 curl $url > nginx.conf
 cd ../
@@ -24,7 +24,7 @@ sudo docker network create my-net
 sudo docker run -td --name db \
 -e MYSQL_ROOT_PASSWORD=pass1234 \
 -e MYSQL_DATABASE=wordpressdb \
--e MYSQL_USER=ashutosh \
+-e MYSQL_USER=arpit \
 -e MYSQL_PASSWORD=password \
 -v /home/ubuntu/database:/var/lib/mysql \
 --net my-net mariadb
@@ -33,7 +33,7 @@ sudo docker run -td --name db \
 sudo docker run -td --name wordpress \
 -e WORDPRESS_DB_HOST=db:3306 \
 -e WORDPRESS_DB_NAME=wordpressdb \
--e WORDPRESS_DB_USER=ashutosh \
+-e WORDPRESS_DB_USER=arpit \
 -e WORDPRESS_DB_PASSWORD=password \
 -v /home/ubuntu/wordpress:/var/www/html \
 --net my-net wordpress:5.7.1-fpm-alpine
