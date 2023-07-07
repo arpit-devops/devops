@@ -1,0 +1,23 @@
+
+
+resource "newrelic_alert_policy" "platform_alert" {
+  for_each            = var.platforms
+  name                = "nrql-${each.key}-${var.env}"
+  incident_preference = "PER_CONDITION"
+}
+
+output block :--
+
+output "newrelic-policy" {
+  value = newrelic_alert_policy.platform_alert[*]
+}
+
+
+1. Output have "value" as an attribute which is going to printed
+2. this will output you correct object values and what attributes it contains. you can filter our attributes inside this output.
+like after tf plan we can say :- newrelic_alert_policy.platform_alert[*].apg.name   --> is a valid key.
+
+3. output block does not have for_each attribute it has "*" or kind of json parsing
+
+
+

@@ -1,0 +1,33 @@
+Terraform modules allow you to group distinct resources of your infrastructure into a single, unified resource.
+The module structure contains Terraform files like main.tf, output.tf, provider.tf, variable.tf and terraform.tfvars.json.
+
+Put all these file in a directory :-  main.tf, output.tf, provider.tf, variable.tf and terraform.tfvars.json.
+
+A complete Terraform configuration consists of a root module and the tree of child modules
+
+Dynamic Block :- You can dynamically construct repeatable nested blocks using a special dynamic block type, which is supported inside resource, data, provider, and provisioner blocks.
+
+
+Module with git versioning:- 
+
+1. create module 
+2. commit module
+3. git tag v1.0  --> to tag commit
+4. git push
+5. git push --tags  --> to push tag
+
+this tag you can see in git repo.
+
+module "name" {
+  source = "git@bitbucket.org:trilegiant-production/gce-nextgen-cloud-terraform-modules.git//modules//s3?ref=develop"
+}
+
+Here "//modules//s3"   --> this is path of module inside repo
+?ref   ==> this is to mention tags, branch name, commit hash (via git logs)
+
+
+
+
+
+
+

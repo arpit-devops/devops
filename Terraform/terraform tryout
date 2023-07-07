@@ -1,0 +1,16 @@
+terraform tryout 
+
+terraform -chdir=terraform plan -var-file="dev-var.tfvars" --out tfplan
+terraform -chdir=terraform show -json tfplan > tfplan.json
+
+
+terraform -chdir=terraform apply tfplan
+
+
+terraform -chdir=${dir_path} plan -var-file=tfvars/${env}.tfvars
+terraform -chdir=terraform destroy --auto-approve  -var-file="${ENVIRONMENT}-var.tfvars"
+
+
+
+
+terraform apply -var-file="testing.tfvars"

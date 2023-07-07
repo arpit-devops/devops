@@ -1,0 +1,51 @@
+File TFvars:-
+*************
+
+squadcast_escalation_var = [
+    {
+        target_type     = "Schedule"
+        delay_minutes   = 0
+        schedule_name = "platform-schedule"
+    },
+    {
+        target_type     = "squad"
+        delay_minutes   = 5
+    }
+
+]
+
+
+Variable.tf :-
+**************
+
+variable "squadcast_escalation_var" {
+  type = list(object({
+    target_type    = string
+    delay_minutes  = number
+    schedule_name  = optional(string)
+  }))
+}
+
+main.tf
+*******
+
+data "squadcast_schedule_v2" "schedule_v2" {
+  for_each = { for idx, item in var.squadcast_escalation_var : idx => item if contains(keys(item), "schedule_name") && item.schedule_name != null}
+  name     = each.value.schedule_name
+  team_id = data.squadcast_team.team_name.id
+}
+
+output.tf
+*********
+
+output "fetched_schedules" {
+  value = {
+    for idx, schedule in data.squadcast_schedule_v2.schedule_v2 : idx => {
+      schedule_name  = schedule.description
+    }
+  }
+}
+
+
+
+

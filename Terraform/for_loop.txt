@@ -1,0 +1,103 @@
+you should use for_each, but the issue with that is, it doesn't accept "lists", only maps.
+Error is often caused by passing a list to for_each, but for_each only works with unordered data-types, i.e. with sets and maps.
+
+fir looping in map:-
+********************
+
+1. if input is list:-
+
+[for i, v in var.list : "${i} is ${v}"]
+
+this i,v are index and items because input is list (mylist)
+
+
+
+2. if input is dictionary/map
+
+[for k, v in var.map : length(k) + length(v)]
+
+k,v are key and value
+
+
+3. if for loop uses [ and ], which produces a tuple
+
+4.  If you use { and } instead, the result is an object and you must provide two result expressions that are separated by the => symbol:
+
+{for s in var.list : s => upper(s)}
+
+
+output for this "for loop" is also object/dictionary like ${s} = ${upper(s)} 
+
+example:-
+
+{
+  foo = "FOO"
+  bar = "BAR"
+  baz = "BAZ"
+}
+
+
+5. filters
+
+5.1[for s in var.list : upper(s) if s != ""]
+
+
+
+5.2
+variable "users" {
+  type = map(object({
+    is_admin = bool
+  }))
+}
+
+locals {
+  admin_users = {
+    for name, user in var.users : name => user
+    if user.is_admin
+  }
+  regular_users = {
+    for name, user in var.users : name => user
+    if !user.is_admin
+  }
+}
+
+
+for looping in list:-
+*********************
+we can use "count", then call [count.index] 
+
+resource null_resource example {
+  count = length(var.a_list)
+
+  triggers = {
+    element = var.a_list[count.index]
+  }
+}
+
+or  Better_way
+
+you should use for_each, but the issue with that is, it doesn't accept "lists", only "maps".
+
+If your list is anyway consisting of unique items, then you can use "toset" to convert the list to a map, and start using for_each today!
+
+resource null_resource example {
+  for_each = toset(var.a_list)
+
+  triggers = {
+    element = each.value
+  }
+}
+
+each.key — The map key (or set member) corresponding to this instance.
+each.value — The map value corresponding to this instance. (If a set was provided, this is the same as each.key.)
+
+
+
+
+
+
+
+
+
+
+
