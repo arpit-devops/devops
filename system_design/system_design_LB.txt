@@ -1,0 +1,74 @@
+Type of Load balancing:
+**********************
+1. DNS Load Balancer
+2. Hardware LB
+3. Software LB
+4. Global server Load balancing
+
+General Attribute of load balancer:-
+***********************************
+1. Scalability           	--> we can horizontally scale our server behind load balancer.
+2. High Availability     	--> it healthcheck for server behind lb, if server is down it send traffic to another server 
+3. Perfromance (Thoughput)	--> performance might little decrease because traffic reach server via LB 
+4. Maintanability               --> it help in server maintability as to cut server and attached.
+
+DNS LB:-
+******
+suppose we have 3 server with ip address 123.12.12.3, 123.12.12.4, 123.12.12.5.
+we take DNS like myweb.com  and it is matched with these three IP address. it will send request one by one to each server like round-robin.
+super simple and cheap
+
+drawback:-
+if one server fail it still send traffic to this server only. 
+it expose direct IP for our server. security issue.
+
+to remove this drawback use H/W or S/W LB.
+
+
+H/W or S/W LB:-
+*************
+
+<check general attribute of LB>
+
+it is use as internal LB as well to route traffic between many Backend server.
+
+drawback:-
+this LB should be Co-located with server, because if we have 5-5 LB in different localtion (data centre/region) with LB it leads to latency.
+
+we still need DNS resolution
+
+to remove this drawback we use GSLB - Global server load balancer.
+
+GSLB - Global server load balancer:-
+***********************************
+
+1.this is intellegent to send traffic to server near to geographical location based on CPU load in Data centre, response time, Bandwidth.
+
+2. This also resolve DNS for us.
+
+Also very helpful in disaster recovery situation. if one data centre down it will send traffic to another Data centre.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
