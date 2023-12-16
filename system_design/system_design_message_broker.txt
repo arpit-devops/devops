@@ -1,0 +1,52 @@
+Synchronous and Asynchronous Architecture:-
+*******************************************
+The main difference between asynchronous and synchronous API architecture is that synchronous architecture is a blocking process where the client must wait for the server's response, 
+while in asynchronous architecture, the client can perform other tasks while waiting for the response.
+
+Drawback of Synchronous communication:-
+--> Both client and server should remain healthy and maintain this connection to complete transaction.
+	--> this is easy to achieve this when two services exchange small message that take short time to process and respond
+	--> It can get complex when a service takes a long time to complete its operation and provide a response.
+Example:- 1. Bookmyshow  --> seat selection to payment gateway take long time.
+	  2. flipkart sale to buy cheap iphone --> to many request for payment service even we scale payment service.	
+
+so there above Drawback will be easily eliminated by message broker.
+
+what is message broker and why do we need this ?
+
+A software architecture building block that uses the queue data structure to store message between sender and receiver.
+A message broker is used inside our system and not exposed externally.
+
+Basic capabilities:-
+1. storing/temporarily buffering the message
+2. message routing
+3. Transformation validation --> making changes in queue data
+4. load balancing            --> between sender and reciver
+
+Unlike LB, Message Broker entirely decouples senders from the receivers.
+
+*** Message Broker are fundamental building block of Asynchronous software architecture ***
+
+
+so sender dont have to wait for receiver acknowledge for message send.
+
+
+Most message broker works on publish-subscribe pattern,
+where service can 
+	Publish message to particular channel
+	Subscribe to a channel
+
+so channel may be subscribe to multiple service like Notification, payment, Analytics, review.
+
+Message broker is fault tollerance:-
+1. prevent messages from being lost.
+2. with spike in message we can scale infra as well.
+3. High Availability
+
+Performance:-
+there will be some latency but not too significant.
+
+Example:-
+Apache Kafka - The most popular open-source message broker nowadays. Apache Kafka is a distributed event streaming platform used by thousands of companies for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.
+
+AWS SQS
