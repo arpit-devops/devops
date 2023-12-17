@@ -56,6 +56,15 @@ Regularly review the AWS Well-Architected Framework and Security Best Practices 
 Stay informed about AWS security updates and new features.
 It's important to note that security is an ongoing process, and it's crucial to stay informed about the latest security threats and best practices. AWS provides a wealth of documentation and resources to help users maintain a secure environment. Additionally, consider consulting with AWS security experts or using third-party tools and services to enhance your security posture.
 
+WAF:-
+	remediate:-
+	cross side scripting 
+	sql injection
+https://youtu.be/udug43AWeJw?si=gOXadsMqlqXMHrfI
+
+WAF is directly assocaited to ALB and API gateway, as web access control list (web ACL).
+block certain ip, header, bot to avoide malacious activity
+
 
 
 
