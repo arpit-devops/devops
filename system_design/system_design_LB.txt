@@ -33,7 +33,7 @@ H/W or S/W LB:-
 it is use as internal LB as well to route traffic between many Backend server.
 
 drawback:-
-this LB should be Co-located with server, because if we have 5-5 LB in different localtion (data centre/region) with LB it leads to latency.
+this LB should be Co-located with server, because if we have 5-5 server in different localtion (data centre/region) with LB it leads to latency.
 
 we still need DNS resolution
 
