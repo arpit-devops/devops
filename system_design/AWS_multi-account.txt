@@ -1,0 +1,39 @@
+source :- https://spacelift.io/blog/aws-multi-account-strategy
+
+A common scenario for many organizations is to start their AWS journey in a single AWS account for everything because it’s quick and easy to set up.
+
+Benefits of using a Multi-Account Strategy :-
+
+1. Resource Isolation
+	--> any disruptions or failures in one environment don’t cascade into another
+	--> Even more, it’s considered a best practice to use different accounts for different environments like development, staging, and production. 
+	--> This ensures that developers and cloud engineers can experiment and test without risk to production environments.
+
+2. Simplified Cost-Tracking and Allocation
+3. Centralized Management and Governance --> AWS Organisation
+4. Limits and Service Quotas Management
+5. Data isolation
+
+
+Some point for AWS Organization:-
+1. you can create multiple OU (Organizational Unit) and create account and move that new account to OU.
+2. every OU has there own Root user (which have all permission for that account)
+3. so we can create different account from existing root account
+4. Organization root has management account --> this should use to manage not running workload.
+5. account under OU knows as member account --> responsible for running work loads.
+
+Service Control Policies (SCPs) define the uppermost bounds of permissions for an organization, an OU, or an individual account. similar to IAM, but IAM is only for own account itself not OU.
+
+hard to audit ion term of single account.
+
+Control Tower:- 
+*************
+this is set of tool that help in managing multiple account on one single dashboard.
+
+1.guardrails :- for best practices and complainces.
+	--> dis-allow deletion of log archive.
+	--> Dis-allow change bucket policy.
+	--> All cloud trails for all account.
+
+2. account factory :- can be help in enroll and provisioned new account.
+ 
