@@ -1,0 +1,40 @@
+Motivation:-
+suppose we have single service which did UI, user profile, channel subscription, straming, auth.
+but managing this much into a single service is very complex.
+
+so we can segrate this single service in multiple standalone services.
+i.e. single API now split into multiple APIs.
+
+but the drawback with multiple APIs is:-
+1. user need to call each serivce separately.
+2. user need to prove auth for each service 
+--> this lead to lot of performance overhead and duplication.
+
+
+To eliminate these drawback we need to introduce API gateway, which is centralise API management and routing.
+
+API Gateway follows a software architecture pattern called as API composition.
+--> we compose all the APIs of all service into one single API.
+
+
+The benefits of API gateway:-
+***************************
+1. seamless rotuting to internal APIs as per path based or header like video sevice for mobile or pc.
+2. consolidating all security, authrization and authentication in a single place.
+3. we can set rbac for authenticated user like 
+	--> viewing private videos
+	--> deleting/uploading new videos
+4. we can also implement rate-limiting at API gateway to block denial of service (Dos) attacks from malicious users.
+5. reduce serivce overhead, like removing auth login from single API.
+6. static content and responce caching.
+7. Monitoring and Alerting --> load, traffic
+8. Protocal translation :- suppose request came in HTTP 2.0 but internal serivce take request as gRPC or Http 1.0, we can translate via API gateway.
+
+Considerations:-
+***************
+
+1. API Gateway shouldn't have any business logic.
+2. the purpose of an API gateway is:-
+	--> API composition
+	--> Routing request to different serivice
+3. API will become single point of failure --> use HA, and avoide any bug --> extra carefull.
