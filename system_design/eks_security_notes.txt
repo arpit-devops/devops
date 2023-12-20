@@ -1,0 +1,18 @@
+EKS security notes:-
+container are process sharing common kernel, isolated by namespace and cgroup, 
+an attacker can breach namespace and can access host 
+
+Hosts --> CIS benchmark, deploy node on private subnet
+container images --> ecr scanning on push, use apline, run user as non-root.
+IAM --> use IRSA to pod instead of giving permission to EC2, EKS endpoint private, 
+Network --> enable network policy --> restricting east-west traffic like ingress and egress for pod and to which port. start with denied all, create SG for node. service to service traffic encryption using mesh.
+auditing and forensic (after pod kill do analysis) --> enable control plane logs, cloud trails log
+configuration --> password, vault, params
+data --> data at rest and transit --> GDPR
+source code --> static code analysis 
+Pod and runtime:- we can introduce PSP:-  now Pod Security Admission (PSA) from eks 1.25
+	--> deny privilage esclaration within pod.
+	--> deny running as root.
+	--> deny mounting host path
+	--> drop linux capability 
+	
